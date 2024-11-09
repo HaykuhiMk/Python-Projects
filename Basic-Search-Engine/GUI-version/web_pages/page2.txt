@@ -1,0 +1,2 @@
+JavaScript is a programming language that conforms to the ECMAScript specification.
+JavaScript is high-level, often just-in-time compiled, and multi-paradigm. It has dynamic typing and prototype-based object orientation.
