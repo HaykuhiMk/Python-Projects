@@ -42,25 +42,128 @@ python hospital_system.py
 
 The system presents a command-line interface with numbered options for each action.
 
+Here's an example of usage for each choice option:
+
+---
+
 ### Example Usage
+
 1. **Adding a Patient**
    - Choose "1. Add a new patient".
-   - Enter the patient’s name, age, and Armenian phone number.
-   
+   - Enter the patient’s name (string), age (integer), and Armenian phone number (formatted as +374XXXXXXXX or 0XXXXXXXX).
+   - Example:
+     ```plaintext
+     Enter patient name: John Doe
+     Enter patient age: 30
+     Enter patient phone number: +37477123456
+     ```
+   - Output:
+     ```plaintext
+     Patient John Doe added successfully.
+     ```
+
 2. **Adding a Doctor**
    - Choose "2. Add a new doctor".
-   - Enter the doctor's name, age, specialization, and contact info.
-   
-3. **Adding a Procedure**
-   - Choose "4. Add a new procedure".
-   - Specify the type (Surgery or Consultation), price, and duration if it’s a Surgery.
-   
-4. **Scheduling an Appointment**
-   - Choose "6. Choose a procedure for a patient".
-   - Enter the patient ID and select the procedure ID from the list to schedule.
+   - Enter the doctor’s name, age, specialization (e.g., "Cardiologist"), and contact info.
+   - Example:
+     ```plaintext
+     Enter doctor name: Dr. Jane Smith
+     Enter doctor age: 45
+     Enter doctor's specialization: Cardiologist
+     Enter doctor's contact info: janesmith@example.com
+     ```
+   - Output:
+     ```plaintext
+     Doctor Dr. Jane Smith added successfully.
+     ```
 
-### Exit
-Select "8. Exit" to quit the system.
+3. **Adding a Nurse**
+   - Choose "3. Add a new nurse".
+   - Enter the nurse’s name, age, and contact info.
+   - Example:
+     ```plaintext
+     Enter nurse name: Sarah Brown
+     Enter nurse age: 32
+     Enter nurse contact info: sarahbrown@example.com
+     ```
+   - Output:
+     ```plaintext
+     Nurse Sarah Brown added successfully.
+     ```
+
+4. **Adding a Procedure**
+   - Choose "4. Add a new procedure".
+   - Specify the procedure type (either "Surgery" or "Consultation").
+   - If it’s a Surgery, also provide the surgery type (e.g., "Appendectomy"), duration (in hours), and price.
+   - If it’s a Consultation, provide only the price.
+   - Example (for Surgery):
+     ```plaintext
+     Enter procedure type (Surgery/Consultation): Surgery
+     Enter price: 5000
+     Enter duration in hours: 3
+     Enter surgery type: Appendectomy
+     ```
+   - Output:
+     ```plaintext
+     Surgery procedure added.
+     ```
+   - Example (for Consultation):
+     ```plaintext
+     Enter procedure type (Surgery/Consultation): Consultation
+     Enter price: 200
+     ```
+   - Output:
+     ```plaintext
+     Consultation procedure added.
+     ```
+
+5. **View All Procedures**
+   - Choose "5. View all procedures".
+   - The system will list all procedures available, including their type (Surgery or Consultation), price, and any specific details such as duration or surgery type.
+   - Output:
+     ```plaintext
+     Available Procedures:
+     0. Surgery - Price: 5000, Type: Appendectomy, Duration: 3:00:00
+     1. Consultation - Price: 200, Duration: 0:30:00
+     ```
+
+6. **Scheduling an Appointment**
+   - Choose "6. Choose a procedure for a patient".
+   - Enter the patient ID to associate the procedure with a specific patient.
+   - Select the procedure ID from the available list.
+   - Example:
+     ```plaintext
+     Enter patient ID: 0
+     Available Procedures:
+     0. Surgery - Price: 5000, Type: Appendectomy, Duration: 3:00:00
+     1. Consultation - Price: 200, Duration: 0:30:00
+     Choose a procedure ID: 1
+     ```
+   - Output:
+     ```plaintext
+     Appointment for Consultation Duration: 0:30:00, Price: 200 scheduled for John Doe.
+     ```
+
+7. **View Patient's Medical History**
+   - Choose "7. View patient's medical history".
+   - Enter the patient ID to view the history of procedures they have undergone.
+   - Example:
+     ```plaintext
+     Enter patient ID: 0
+     ```
+   - Output:
+     ```plaintext
+     Medical History:
+     Procedure: Consultation Duration: 0:30:00, Price: 200
+     ```
+
+8. **Exit**
+   - Choose "8. Exit" to close the system.
+   - Output:
+     ```plaintext
+     Exiting the system.
+     ```
+---
 
 ## Additional Information
 
