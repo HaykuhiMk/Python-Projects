@@ -249,7 +249,3 @@ class Hospital:
             else:
                 print(f"{Fore.RED}Invalid choice. Please try again.{Style.RESET_ALL}")
 
-
-if __name__ == "__main__":
-    hospital = Hospital()
-    hospital.administration()
