@@ -232,7 +232,3 @@ class MemoryGameGUI:
                 self.leaderboard = json.load(file)
         else:
             self.leaderboard = []
-
-root = tk.Tk()
-game = MemoryGameGUI(root)
-root.mainloop()
