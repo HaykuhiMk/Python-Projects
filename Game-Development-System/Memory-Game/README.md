@@ -18,6 +18,7 @@ The **Memory Game** is a Python-based card-matching game where players flip card
 ## Requirements
 - Python 3.x or later
 - Tkinter (for the GUI version)
+  
 To install Tkinter for your Python environment:
 
 ```pip install tk```
