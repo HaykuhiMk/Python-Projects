@@ -1,8 +1,10 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
-import numpy as np
+from tkinter import messagebox
 from cell import Cell
+import numpy as np
+from datetime import datetime
 import json
+import sys
 import os
 
 class MemoryGameGUI:
@@ -83,7 +85,7 @@ class MemoryGameGUI:
 
         input_window.geometry(f"{input_width}x{input_height}+{position_left}+{position_top}")
         label = tk.Label(input_window, text="Enter the grid size (even number):",
-                        font=("Helvetica", 22, "bold"))
+                        font=("Helvetica", 20, "bold"))
         label.pack(pady=40)
 
         entry = tk.Entry(input_window, width=16, font=("Helvetica", 22))
@@ -97,6 +99,7 @@ class MemoryGameGUI:
                     self.__size = size
                     self.__win_case = (self.__size ** 2) // 2
                     input_window.destroy()
+                    
                 else:
                     messagebox.showerror("Invalid Input",
                                         "Size must be an even number greater than 1.")
@@ -107,6 +110,7 @@ class MemoryGameGUI:
         ok_button.pack(pady=10)
         input_window.grab_set()
         self.root.wait_window(input_window)
+        self.animate_background()
 
     def __init_board(self):
         """Initialize and shuffle the game board with pairs of matching cells."""
@@ -206,7 +210,10 @@ class MemoryGameGUI:
 
     def __check_win(self) -> bool:
         """Check if the player has matched all pairs."""
-        return self.__win_case == 0
+        if self.__win_case == 0:
+            self.__end_game()  
+            return True
+        return False
     
     def __start_timer(self):
         if self.timer_running:
@@ -221,14 +228,53 @@ class MemoryGameGUI:
             self.__start_timer()
 
     def __restart_game(self):
-        """Restart the game with the same settings."""
-        self.root.destroy()
-        self.__init__()
+        """Restart the game and ask for a new board size."""
+        self.timer_running = False
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        self.__first_click = None
+        self.__second_click = None
+        self.timer_seconds = 0
+        self.move_count = 0
+        self.current_step = 0
+        self.color_index = 0
+        self.__input_size()
+        self.__init_board()
+        self.__create_widgets()
+        self.timer_running = True
+        self.__start_timer()
 
     def __load_leaderboard(self):
         """Load leaderboard data from a file."""
-        if os.path.exists(self.leaderboard_file):
-            with open(self.leaderboard_file, 'r') as file:
-                self.leaderboard = json.load(file)
-        else:
-            self.leaderboard = []
+        try:
+            if os.path.exists(self.leaderboard_file):
+                with open(self.leaderboard_file, 'r') as file:
+                    self.leaderboard = json.load(file)
+            else:
+                self.leaderboard = []
+        except json.JSONDecodeError:
+            messagebox.showerror("Error", "Leaderboard file is corrupted or invalid.")
+            sys.exit()
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred while loading the leaderboard: {e}")
+            sys.exit()
+
+    def __save_leaderboard(self):
+        """Save the leaderboard data to a file."""
+        try:
+            with open(self.leaderboard_file, 'w') as file:
+                json.dump(self.leaderboard, file, indent=4)
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred while saving the leaderboard: {e}")
+    
+    def __end_game(self):
+            """End the game and save the result to the leaderboard."""
+            player_result = {
+                "moves": self.move_count,
+                "time": self.timer_seconds,
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "grid_size": self.__size
+            }
+            self.leaderboard.append(player_result)
+            self.leaderboard = sorted(self.leaderboard, key=lambda x: (x["moves"], x["time"]))
+            self.__save_leaderboard()
