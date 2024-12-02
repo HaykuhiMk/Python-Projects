@@ -40,13 +40,13 @@ pip install numpy
 ## How to Play
 
 ### GUI Version:
-1. Run `memory_game_GUI.py` to start the game.
+1. Run `main_GUI.py` to start the game.
 2. Enter the grid size when prompted (even numbers greater than 1).
 3. Click cards to flip them over, matching pairs.
 4. Pause, restart, and view the timer and move count as needed.
 
 ### CLI Version:
-1. Run `memory_game_CLI.py`.
+1. Run `main_CLI.py`.
 2. Enter the grid size.
 3. Use row and column coordinates to select and flip cards.
 
